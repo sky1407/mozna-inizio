@@ -1,0 +1,33 @@
+{
+  "searchParameters": { "q": "tvorba webových stránek", "gl": "cz", "hl": "cs", "type": "search", "engine": "google" },
+  "knowledgeGraph": { "title": "INIZIO", "type": "Firma", "website": "https://www.inizio.cz/" },
+  "organic": [
+    {
+      "title": "Tvorba webových stránek na míru | INIZIO",
+      "link": "https://www.inizio.cz/tvorba-webovych-stranek/",
+      "snippet": "Navrhneme a vytvoříme web, který prodává.",
+      "sitelinks": [{ "title": "Ceník", "link": "https://www.inizio.cz/cenik/" }],
+      "position": 1
+    },
+    {
+      "title": "  Webnode – vytvořte si web zdarma  ",
+      "link": "https://www.webnode.cz/",
+      "position": 2
+    },
+    {
+      "title": "Neplatná položka bez odkazu",
+      "link": "javascript:alert(1)",
+      "snippet": "Má byť vyradená.",
+      "position": 3
+    },
+    {
+      "title": "Jak na tvorbu webu v roce 2026",
+      "link": "https://blog.example.cz/tvorba-webu",
+      "snippet": "Kompletní průvodce, krok za krokem.",
+      "date": "12. 3. 2026",
+      "position": 4
+    }
+  ],
+  "peopleAlsoAsk": [{ "question": "Kolik stojí tvorba webu?", "link": "https://example.cz/faq" }],
+  "relatedSearches": [{ "query": "tvorba webových stránek cena" }]
+}

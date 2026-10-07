@@ -1,0 +1,12 @@
+# Lokálny vývoj s hot-reloadom: `docker compose up`
+services:
+  app:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "3000:3000"
+    env_file: .env
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
