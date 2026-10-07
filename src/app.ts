@@ -1,5 +1,5 @@
 import express, { type ErrorRequestHandler, type Request } from 'express';
-import { rateLimit } from 'express-rate-limit';
+import { ipKeyGenerator, rateLimit } from 'express-rate-limit';
 import { fileURLToPath } from 'node:url';
 import { buildFilename, EXPORT_FORMATS, toCsv, toJson, type ExportFormat } from './export.js';
 import { parseQuery } from './validation.js';
@@ -11,6 +11,11 @@ export interface AppOptions {
   rateLimitPerMinute?: number;
   /** Počet proxy pred aplikáciou (Render = 1), aby rate limit videl skutočnú IP klienta. */
   trustProxy?: number;
+  /**
+   * Hlavička so skutočnou IP klienta, ktorú nastavuje dôveryhodná proxy (Render/Cloudflare: `cf-connecting-ip`).
+   * Používať len ak je aplikácia dostupná výhradne cez túto proxy – inak si ju klient môže podvrhnúť.
+   */
+  clientIpHeader?: string;
   now?: () => Date;
 }
 
@@ -28,7 +33,13 @@ function parseFormat(input: unknown): ExportFormat {
   throw new ValidationError(`Nepodporovaný formát. Povolené: ${EXPORT_FORMATS.join(', ')}.`);
 }
 
-export function createApp({ provider, rateLimitPerMinute = 30, trustProxy = 0, now = () => new Date() }: AppOptions) {
+export function createApp({
+  provider,
+  rateLimitPerMinute = 30,
+  trustProxy = 0,
+  clientIpHeader,
+  now = () => new Date(),
+}: AppOptions) {
   const app = express();
   app.disable('x-powered-by');
   app.set('trust proxy', trustProxy);
@@ -56,6 +67,10 @@ export function createApp({ provider, rateLimitPerMinute = 30, trustProxy = 0, n
       limit: rateLimitPerMinute,
       standardHeaders: 'draft-8',
       legacyHeaders: false,
+      keyGenerator: (req) => {
+        const forwarded = clientIpHeader ? req.get(clientIpHeader)?.trim() : undefined;
+        return ipKeyGenerator(forwarded || req.ip || 'unknown');
+      },
       message: { error: 'Príliš veľa dopytov, skúste to o chvíľu.' },
     }),
   );
