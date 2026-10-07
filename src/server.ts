@@ -24,6 +24,7 @@ try {
     provider,
     rateLimitPerMinute: readIntEnv('RATE_LIMIT_PER_MINUTE', 30),
     trustProxy: readIntEnv('TRUST_PROXY', 0),
+    ...(process.env['CLIENT_IP_HEADER'] ? { clientIpHeader: process.env['CLIENT_IP_HEADER'] } : {}),
   });
 
   const port = readIntEnv('PORT', 3000);

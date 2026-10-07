@@ -56,6 +56,14 @@ describe('GET /api/search', () => {
     await request(app).get('/api/search').query({ q: 'a' }).expect(200);
     await request(app).get('/api/search').query({ q: 'a' }).expect(429);
   });
+
+  it('za proxy počíta limit podľa IP z nastavenej hlavičky', async () => {
+    const app = createApp({ provider: { search: async () => results }, rateLimitPerMinute: 1, clientIpHeader: 'cf-connecting-ip' });
+    const from = (ip: string) => request(app).get('/api/search').query({ q: 'a' }).set('CF-Connecting-IP', ip);
+    await from('203.0.113.1').expect(200);
+    await from('203.0.113.2').expect(200);
+    await from('203.0.113.1').expect(429);
+  });
 });
 
 describe('GET /api/export', () => {
