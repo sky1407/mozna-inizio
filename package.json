@@ -1,0 +1,33 @@
+{
+  "name": "mozna-inizio",
+  "version": "1.0.0",
+  "description": "Stiahnutie organických výsledkov z 1. strany Google do JSON/CSV",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=.env src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node --env-file-if-exists=.env dist/server.js",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "author": "",
+  "dependencies": {
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.4",
+    "@types/supertest": "^7.2.1",
+    "supertest": "^7.3.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  },
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "UNLICENSED"
+}
